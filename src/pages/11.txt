@@ -1,132 +1,92 @@
-{
-    "name": "digitalCity",
-    "title": "数字城市",
-    "intro": "基于城市场景的可视化展示插件",
-    "version": "0.0.1",
-    "author": "地虎降天龙",
-    "website": "https://gitee.com/hawk86104",
-    "state": "active",
-    "require": [
-        "cannon-es"
-    ],
-    "preview": [
-        {
-            "src": "plugins/digitalCity/preview/buildings.png",
-            "type": "img",
-            "name": "buildings",
-            "title": "建筑物"
-        },
-        {
-            "src": "plugins/digitalCity/preview/radars.png",
-            "type": "img",
-            "name": "radars",
-            "title": "雷达"
-        },
-        {
-            "src": "plugins/digitalCity/preview/weather.png",
-            "type": "img",
-            "name": "weather",
-            "title": "天气"
-        },
-        {
-            "src": "plugins/digitalCity/preview/clouds.png",
-            "type": "img",
-            "name": "clouds",
-            "title": "云☁️"
-        },
-        {
-            "src": "plugins/digitalCity/preview/fog.png",
-            "type": "img",
-            "name": "fog",
-            "title": "迷雾"
-        },
-        {
-            "src": "plugins/digitalCity/preview/smoke.png",
-            "type": "img",
-            "name": "smoke",
-            "title": "烟"
-        },
-        {
-            "src": "plugins/digitalCity/preview/fireA.png",
-            "type": "img",
-            "name": "fireA",
-            "title": "火A🔥效果",
-            "referenceSource": {
-                "title": "jaimetorrealba",
-                "url": "https://lab.jaimetorrealba.com/fire_shaders_demos"
-            }
-        },
-        {
-            "src": "plugins/digitalCity/preview/fireB.png",
-            "type": "img",
-            "name": "fireB",
-            "title": "火B🔥效果"
-        },
-        {
-            "src": "plugins/digitalCity/preview/fireBall.png",
-            "type": "img",
-            "name": "fireBall",
-            "title": "火球🔥效果"
-        },
-        {
-            "src": "plugins/digitalCity/preview/heatmap.png",
-            "type": "img",
-            "name": "heatmap",
-            "title": "热力图"
-        },
-        {
-            "src": "plugins/digitalCity/preview/heatmap2.png",
-            "type": "img",
-            "name": "heatmap2",
-            "title": "建筑物-热力图"
-        },
-        {
-            "src": "plugins/digitalCity/preview/cityRiver.png",
-            "type": "img",
-            "name": "cityRiver",
-            "title": "城市河流"
-        },
-        {
-            "src": "plugins/digitalCity/preview/buildingsPassA.png",
-            "type": "img",
-            "name": "buildingsPassA",
-            "title": "建筑物后期A"
-        },
-        {
-            "src": "plugins/digitalCity/preview/buildingsEffectA.png",
-            "type": "img",
-            "name": "buildingsEffectA",
-            "title": "建筑物效果A"
-        },
-        {
-            "src": "plugins/digitalCity/preview/buildingsMarkA.png",
-            "type": "img",
-            "name": "buildingsMarkA",
-            "title": "建筑物标记A"
-        },
-        {
-            "src": "plugins/digitalCity/preview/roadLines.png",
-            "type": "img",
-            "name": "roadLines",
-            "title": "道路飞线"
-        },
-        {
-            "src": "plugins/digitalCity/preview/fence.png",
-            "type": "img",
-            "name": "fence",
-            "title": "围栏"
-        },
-        {
-            "src": "plugins/digitalCity/preview/regionGlow.png",
-            "type": "img",
-            "name": "regionGlow",
-            "title": "区域内发光"
-        },
-        {
-            "src": "plugins/digitalCity/preview/city2.gif",
-            "type": "img",
-            "name": "city2",
-            "title": "城市新模型"
-        }
-    ]
-}
+<el-dialog
+          v-model="dialogWholeSimVisible"
+          :title="流程控制选择"
+          width="76%"
+          :close-on-click-modal="false"
+          center
+        >
+          <el-card>
+            <el-steps
+              style="display: flex; justify-content: center"
+              :space="200"
+              :active="activeIndex - 0"
+              align-center
+              finish-status="success"
+            >
+              <el-step title="基本信息"></el-step>
+              <el-step title="节点配置"></el-step>
+              <el-step title="区块配置"></el-step>
+              <el-step title="网络配置"></el-step>
+              <el-step title="完成配置"></el-step>
+            </el-steps>
+            <div class="cardContent">
+              <div class="mesBox" v-show="activeIndex == 0">
+                <div v-show="activeIndex == 0">
+                  <h2>  
+                    协作式仿真由仿真发起者进行全局仿真参数配置，仿真开始后该配置项内的相关参数将无法被修改。
+                  </h2>
+
+                  <div class="dataImport">
+                    <el-button type="primary" @click="findUserSimList" size="large">查看仿真记录</el-button>
+                  </div>
+                   <div class="dataImport">
+                    <el-button type="primary" @click="findaddUserSimList" size="large">在线加入仿真</el-button>
+                  </div>
+                </div>
+              </div>
+              <div class="mesBox" v-show="activeIndex == 4">
+                <div v-show="activeIndex == 4">
+                  <h2>
+                    配置完相关参数后点击创建，协作式仿真创建者会创建第初始仿真行为，后续有用户想要加入仿真需要对当前仿真进行申请，管理员通过申请即可加入该轮仿真。
+                  </h2>
+                  <div class="dataImport">
+                    <!-- <el-button type="primary" size="large">导入数据</el-button> -->
+                    <!-- <el-button type="primary" @click="nextEnd"
+                      >直接获取仿真结果</el-button
+                    > -->
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cardSeting"
+                v-show="activeIndex != 0 && activeIndex != 4"
+              >
+                <div v-show="activeIndex == 1">
+                
+                </div>
+                <div v-show="activeIndex == 2">
+                 
+                </div>
+                <div v-show="activeIndex == 3">
+                  
+                </div>
+              </div>
+              <div
+                class="cardSeting2"
+                v-show="activeIndex != 0 && activeIndex != 4"
+              >
+                <div v-show="activeIndex == 1">
+                
+                </div>
+                <div v-show="activeIndex == 2">
+                 
+                </div>
+                <div v-show="activeIndex == 3">
+                 
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button v-if="activeIndex != 0" @click="activeIndex--">{{
+                t("PreviousStep")
+              }}</el-button>
+              <el-button
+                type="primary"
+                @click="next"
+                v-text="activeIndex == 4 ? `开始` : `下一步`"
+              ></el-button>
+            </span>
+          </template>
+    </el-dialog>
