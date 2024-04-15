@@ -60,7 +60,7 @@
                 <span>{{ item.title }}</span>
               </el-carousel-item> -->
                 <el-carousel-item>
-                  <span>点击查看节点消息</span>
+                  <span>点击查看基本消息</span>
                 </el-carousel-item>
               </el-carousel>
               <!-- <span>点击查看节点消息</span> -->
@@ -94,7 +94,40 @@
                 <span>{{ item.title }}</span>
               </el-carousel-item> -->
                 <el-carousel-item>
-                  <span>点击查看区块消息</span>
+                  <span>点击查看故障消息</span>
+                </el-carousel-item>
+              </el-carousel>
+              <!-- <span>点击查看区块消息</span> -->
+            </template>
+            <c-scrollbar maxHeight="280px" height="280px" trigger="hover">
+              <div v-for="item in blockMesVisList" class="event-content">
+                <div class="event-mes-block-node">
+                  {{ item.mes }}
+                </div>
+                <!-- <el-icon :size="18" class="iconfont">
+                    <Edit />
+                  </el-icon> -->
+                <div class="event-detail" @click="showBlockDetial(item)">
+                  <el-icon class="event-detail-buttom"><MoreFilled /></el-icon>
+                </div>
+              </div>
+            </c-scrollbar>
+          </el-collapse-item>
+          <el-collapse-item name="3">
+            <template #title>
+              <el-carousel
+                style="width: 100%"
+                height="49px"
+                direction="vertical"
+                indicator-position="none"
+                :autoplay="true"
+                :interval="1000"
+              >
+                <!-- <el-carousel-item v-for="item in systemMsgBlock" :key="item.id">
+                <span>{{ item.title }}</span>
+              </el-carousel-item> -->
+                <el-carousel-item>
+                  <span>点击查看修复消息</span>
                 </el-carousel-item>
               </el-carousel>
               <!-- <span>点击查看区块消息</span> -->
@@ -195,7 +228,9 @@
               <div class="mesBox" v-show="activeIndex == 0">
                 <div v-show="activeIndex == 0">
                   <h2>  
-                    协作式仿真由仿真发起者进行全局仿真参数配置，仿真开始后该配置项内的相关参数将无法被修改。
+                    数字孪生是充分利用物理模型、传感器更新、运行历史等数据，集成多学科、
+                    多物理量、多尺度、多概率的仿真过程，在虚拟空间中完成映射，从而反映相对应的实体装备的全生
+                    命周期过程。数字孪生是一种超越现实的概念，可以被视为一个或多个重要的、彼此依赖的装备系统的数字映射系统。
                   </h2>
 
                 </div>
@@ -203,7 +238,9 @@
               <div class="mesBox" v-show="activeIndex == 4">
                 <div v-show="activeIndex == 4">
                   <h2>
-                    配置完相关参数后点击创建，协作式仿真创建者会创建第初始仿真行为，后续有用户想要加入仿真需要对当前仿真进行申请，管理员通过申请即可加入该轮仿真。
+                    数字孪生是充分利用物理模型、传感器更新、运行历史等数据，集成多学科、
+                    多物理量、多尺度、多概率的仿真过程，在虚拟空间中完成映射，从而反映相对应的实体装备的全生
+                    命周期过程。数字孪生是一种超越现实的概念，可以被视为一个或多个重要的、彼此依赖的装备系统的数字映射系统。
                   </h2>
                   <div class="dataImport">
                     <!-- <el-button type="primary" size="large">导入数据</el-button> -->
