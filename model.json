@@ -1,0 +1,56 @@
+{
+      "modelName": "DigNetWork",
+      "userNumber": 100000,
+      "stratTime": 0,
+      "endTime": 12321421,
+      "usermodel":[
+            { //用户举例,手机用户多少，电脑用户多少，和其他类型用户
+            "userEquipment" : "phone",
+            "userNum":"4000"
+            },{ 
+            "userEquipment" : "pc",
+            "userNum":"6000"
+            }
+      ],
+      "listOfRegions": [{  //核心网大区列表
+        "regionsName":1,//大区一
+        "AMF":{
+             "PBU_C-A":12,
+             "PBU_C-A1":23,
+             "其他配置":""
+        },//AMF相关配置
+        "RAN":{},//RAN相关配置
+        "UDM":{},
+        "SMF":{},
+        "CHF":{},
+        "PCF":{},
+        "其他配置":""
+        },
+        {
+        "regionsName":2,
+        "AMF":{},
+        "RAN":{},
+        "UDM":{},
+        "SMF":{},
+        "CHF":{},
+        "PCF":{},
+        "其他配置":""
+        }
+    ],
+    "digitalTwinProcess":{
+        "初次入网基本流程":[//基本流程内容无故障
+            {},//多少个用户分别请求大区一AMF、SMF、UDM、PCF、CHF，流程要带时间
+            {},//多少个用户分别请求大区一AMF、SMF、UDM、PCF、CHF
+            //{}.....
+            {}//流程结束
+        ],
+        "故障流程1":[
+            {},//故障事件
+            {},//多少个用户分别请求大区二AMF、SMF、UDM、PCF、CHF，失败接口数量
+            {},//其他事件
+            //{}.....
+            {}//流程结束
+        ],
+        "故障流程2":[]
+    }
+}

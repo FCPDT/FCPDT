@@ -13,6 +13,112 @@
 			<buildingsPassA v-bind="passState" />
 		</template>
 	</pagesShow>
+  <div class="bottomLight">
+    <div class="bottomLightTipF">
+        <div class="bottomLightTipFCenter">
+          <el-icon :style="{
+                    color: CircleCheckFilledc
+                  }"><CircleCheckFilled /></el-icon>
+        </div>
+        <button @click="handleExceedChange"> sss</button>
+        
+    </div>
+    <div class="bottomLightTipF">
+      
+       <div class="bottomLightTipFCenter">
+          <el-icon :style="{
+                    color: CircleCheckFilledw
+                  }"><WarningFilled /></el-icon>
+        </div>
+    </div>
+    <div class="bottomLightTipF">
+      <div class="bottomLightTipFCenter">
+          <el-icon :style="{
+                    color: CircleCheckFilledi
+                  }"><InfoFilled /></el-icon>
+      </div>
+    </div>
+  
+  </div>
+
+<div class="bs-sysMsg">
+        <span style="font-weight: bold;line-height:50px;font-size:23px"
+          ><span v-show="sysDidMesStates == false">事件列表</span>
+        </span>
+        <el-collapse v-model="activeName" accordion>
+          <el-collapse-item  name="1">
+            <template #title>
+              <el-carousel
+                style="width: 100%"
+                height="49px"
+                direction="vertical"
+                indicator-position="none"
+                :autoplay="false"
+                :interval="1000"
+              >
+                <!-- <el-carousel-item v-for="item in systemMsgNode" :key="item.id">
+                <span>{{ item.title }}</span>
+              </el-carousel-item> -->
+                <el-carousel-item>
+                  <span>点击查看节点消息</span>
+                </el-carousel-item>
+              </el-carousel>
+              <!-- <span>点击查看节点消息</span> -->
+            </template>
+            <!-- <c-scrollbar maxHeight="100%" trigger="hover"> -->
+            <c-scrollbar maxHeight="280px" height="280px" trigger="hover">
+              <div v-for="item in nodeMesVisList" class="event-content">
+                <div class="event-mes-block-node">
+                  {{ item.mes }}
+                </div>
+                <!-- <el-icon :size="18" class="iconfont">
+                    <Edit />
+                  </el-icon> -->
+                <div class="event-detail" @click="showNodeDetial(item)">
+                  <el-icon class="event-detail-buttom"><MoreFilled /></el-icon>
+                </div>
+              </div>
+            </c-scrollbar>
+          </el-collapse-item>
+          <el-collapse-item name="2">
+            <template #title>
+              <el-carousel
+                style="width: 100%"
+                height="49px"
+                direction="vertical"
+                indicator-position="none"
+                :autoplay="true"
+                :interval="1000"
+              >
+                <!-- <el-carousel-item v-for="item in systemMsgBlock" :key="item.id">
+                <span>{{ item.title }}</span>
+              </el-carousel-item> -->
+                <el-carousel-item>
+                  <span>点击查看区块消息</span>
+                </el-carousel-item>
+              </el-carousel>
+              <!-- <span>点击查看区块消息</span> -->
+            </template>
+            <c-scrollbar maxHeight="280px" height="280px" trigger="hover">
+              <div v-for="item in blockMesVisList" class="event-content">
+                <div class="event-mes-block-node">
+                  {{ item.mes }}
+                </div>
+                <!-- <el-icon :size="18" class="iconfont">
+                    <Edit />
+                  </el-icon> -->
+                <div class="event-detail" @click="showBlockDetial(item)">
+                  <el-icon class="event-detail-buttom"><MoreFilled /></el-icon>
+                </div>
+              </div>
+            </c-scrollbar>
+          </el-collapse-item>
+        </el-collapse>
+      </div>
+
+  
+
+
 
 
   <el-dialog
@@ -47,8 +153,6 @@
 					<div style="font-size:18px" class="el-upload__tip text-red">
 						限制XXX类型文件，新文件会覆盖旧文件
 					</div>
-
-					
 					</template>
 					
 				</el-upload>
@@ -161,19 +265,111 @@ import { Pane } from 'tweakpane'
 
 import { genFileId } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
+
+import {
+  CircleCheckFilled,
+  WarningFilled,
+  InfoFilled,
+} from "@element-plus/icons-vue";
 //文件上传
 const upload = ref<UploadInstance>()
+
+let CircleCheckFilledc = ref("black");
+let CircleCheckFilledw = ref("black");
+let CircleCheckFilledi = ref("black");
+
+const changeCircleCheckFilledc = () => {
+    CircleCheckFilledc.value = "#15ff00"
+}
+const changeCircleCheckFilledw = () => {
+    CircleCheckFilledw.value = "red"
+}
+const changeCircleCheckFilled1 = () => {
+    CircleCheckFilledi.value = "#fff200"
+}
+
+const handleExceedChange = () => {
+  console.log(1111);
+  changeCircleCheckFilledc();
+  changeCircleCheckFilledw();
+  changeCircleCheckFilled1();
+  setTimeout(() => {
+    CircleCheckFilledc.value = "black";
+    CircleCheckFilledw.value = "black";
+    CircleCheckFilledi.value = "black";
+  }, 1000);
+  console.log(1112);
+}
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
   upload.value!.clearFiles()
   const file = files[0] as UploadRawFile
   file.uid = genFileId()
   upload.value!.handleStart(file)
+
 }
+
+//侧边信息栏
+let sysDidMesStates= ref(false);
+let sysMesStatesContent= ref("");
 
 const submitUpload = () => {
   upload.value!.submit()
 }
+
+const activeName = ref("1");
+
+let nodeMesVisList = reactive([
+      {
+        id: 0,
+        content: "节点消息创建",
+        mes: "节点消息创建",
+        type: "normalMes",
+        contentMessage: {
+          blockDetail: { blockId: "", blockHeight: "", blockHash: "" },
+          tradeTime: "",
+          content: { id: null, mes: "区块消息创建" },
+          id: null,
+          type: "normalMes",
+          isOrphan: "false",
+          from: "1",
+          to: "2",
+          miner: "0",
+          confirmId: null,
+          transactionId: "0",
+        },
+      },
+    ]);
+    let blockMesVisList = reactive([
+      {
+        id: 0,
+        content: { mes: "区块消息创建" },
+        mes: "节点消息创建",
+        type: "normalMes",
+        contentMessage: {
+          blockDetail: { blockId: "", blockHeight: "", blockHash: "" },
+          tradeTime: "",
+          content: { id: null, mes: "区块消息创建", blockId: "" },
+          id: null,
+          type: "normalMes",
+          from: "1",
+          to: "2",
+          miner: "0",
+          confirmId: null,
+          isOrphan: "false",
+          transactionId: "0",
+        },
+      },
+    ]);
+
+
+
+
+
+
+
+
+
 
 //导入后的按钮可视化
 let sysMesStates =  ref(false);
@@ -305,4 +501,101 @@ paneControl.addBinding(passState, 'uPosition', {
 	font-size: 22px;
 	margin-top: 90px;
 }
+.bottomLight{
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  bottom: 10px;
+}
+.bottomLightTipF{
+  float: left;
+  width: 33%;
+  height: 100px;
+  opacity: 0.8;
+  display: flex; 
+  justify-content: center;
+  
+  font-size: 40px;
+}
+.bottomLightTipF{
+  float: left;
+  width: 33%;
+  height: 100px;
+  opacity: 0.8;
+  display: flex; 
+  justify-content: center;
+  
+  font-size: 40px;
+}
+.bottomLightTipFCenter{
+  display: flex; 
+  width: 9%;
+  height: 70%;
+  border-radius:50%;
+  justify-content: center;
+  background-color: aliceblue;
+  align-items: center;
+}
+.bs-sysMsg {
+  color: #ffffff;
+  margin-top: 4%;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #565853;
+  position: absolute;
+  background-color: #565853;
+  width: 19%;
+  height: auto;
+  z-index: 999;
+  padding: 0 1%;
+  opacity: 0.8;
+  text-align: center;
+}
+.searchStartButton {
+  padding-left: 20%;
+  padding-top: 2px;
+}
+.closebold:hover {
+  cursor: pointer;
+}
+.event-content {
+  width: 100%;
+  height: 35px;
+  display: flex;
+}
+.event-mes-block-node {
+  width: 80%;
+  height: 35px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.event-detail {
+  width: 20%;
+  height: 35px;
+}
+.event-detail-buttom {
+  font-size: 18px;
+}
+.event-detail-buttom:hover {
+  cursor: pointer;
+}
+
+el-collapse {
+      background-color: #565853 !important;
+}
+.el-collapse,.el-collapse-item__wrap {
+      border: none;
+      background-color:  #565853 !important;
+    }
+ .el-collapse-item__header {
+        color: #fff;
+        background-color: #565853 !important;
+            border-bottom: 1px solid #393a37;
+    }
+ .el-collapse-item__content {
+        color: #fff;
+        background-color: #565853 !important;
+        border-bottom: 1px solid #393a37;
+    }
 </style>>
