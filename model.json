@@ -1,10 +1,10 @@
 {
       "modelName": "DigNetWork",
       "userNumber": 100000,
-      "stratTime": 0,
+      "startTime": 0,
       "endTime": 12321421,
       "usermodel":[
-            { //用户举例,手机用户多少，电脑用户多少，和其他类型用户
+            {
             "userEquipment" : "phone",
             "userNum":"4000"
             },{ 
@@ -12,45 +12,477 @@
             "userNum":"6000"
             }
       ],
-      "listOfRegions": [{  //核心网大区列表
-        "regionsName":1,//大区一
+      "listOfRegions": [{
+        "regionsName":1,
         "AMF":{
-             "PBU_C-A":12,
-             "PBU_C-A1":23,
-             "其他配置":""
-        },//AMF相关配置
-        "RAN":{},//RAN相关配置
-        "UDM":{},
-        "SMF":{},
-        "CHF":{},
-        "PCF":{},
-        "其他配置":""
+          "pbucaContainerCount":12,
+          "pbuca1ContainerCount":23,
+          "pbuig1ContainerCount": 25,
+          "wholeSystemSGPProcessCount": 50,
+          "pbucasingleVMCapsCapacity": 100,
+          "pbuca1singleVMCapsCapacity": 100,
+          "pbuig1singleVMCapsCapacity": 100,
+          "pbucaTotalCapacity": 1200,
+          "pbuca1TotalCapacity": 2300,
+          "pbuig1TotalCapacity": 2500,
+          "singleDcPoolAmfElementCapacity": 500,
+          "singleDcPoolAmfElementRegisteredUserCapacity": 500,
+          "singleDcPoolAmfElementActiveUserCapacity": 250,
+          "otherConfig":"暂无"
         },
+        "RAN": {
+          "CUUP": {
+            "cuupContainerCount": 20,
+            "duContainerCount": 15,
+            "cuupsingleVMCapsCapacity": 80,
+            "dusingleVMCapsCapacity": 100,
+            "cuupTotalCapacity": 1600,
+            "duTotalCapacity": 1500,
+            "singleDcPoolCuupElementCapacity": 400,
+            "singleDcPoolCuupElementUserCapacity": 400,
+            "singleDcPoolDuElementCapacity": 300,
+            "singleDcPoolDuElementUserCapacity": 300
+          },
+          "UDM": {
+            "singleDcPoolElementCount": 100,
+            "5GUserLicenseRatio": 0.25,
+            "uisuContainerCount": 10,
+            "uccuContainerCount": 15,
+            "uisuSingleVmCaps": 50,
+            "uccuSingleVmCaps": 50,
+            "uisuTotalCapacity": 500,
+            "uccuTotalCapacity": 750,
+            "singleDcPoolUdmElementCapacity": 100
+          },
+          "SMF": {
+            "pbucsContainerCount": 10,
+            "pbucs1ContainerCount": 15,
+            "pbuig1ContainerCount": 10,
+            "pbucsSingleVmCaps": 50,
+            "pbucs1SingleVmCaps": 50,
+            "pbuig1SingleVmCaps": 50,
+            "pbucsTotalCapacity": 500,
+            "pbucs1TotalCapacity": 750,
+            "pbuig1TotalCapacity": 750,
+            "singleDcPoolAmfElementCapacity": 200,
+            "singleDcPoolAmfElementActiveUserCapacity": 250
+          },
+          "CHF": {
+            "pbucnContainerCount": 20,
+            "pbuig1ContainerCount": 15,
+            "pbusg1ContainerCount": 12,
+            "pbusg2ContainerCount": 10,
+            "pbucnSingleVmCaps": 50,
+            "pbuig1SingleVmCaps": 40,
+            "pbusg1SingleVmCaps": 20,
+            "pbusg2SingleVmCaps": 30,
+            "pbucnTotalCapacity": 1000,
+            "pbuig1TotalCapacity": 600,
+            "pbusg1TotalCapacity": 240,
+            "pbusg2TotalCapacity": 300,
+            "singleDcPoolPcfElementCapacity": 100
+          },
+          "PCF": {
+            "upsrvsContainerCount": 50,
+            "upsrvrContainerCount": 35,
+            "upsrvlContainerCount": 25,
+            "upsrvsSingleVmCaps": 10,
+            "upsrvrSingleVmCaps": 10,
+            "upsrvlSingleVmCaps": 10,
+            "upsrvsTotalCapacity": 500,
+            "upsrvrTotalCapacity": 350,
+            "upsrvlTotalCapacity": 250,
+            "singleDcPoolPcfElementCapacity": 100
+          },
+          "otherConfig": {
+            "Note": "without otherConfig"
+          }
+        }},
         {
-        "regionsName":2,
-        "AMF":{},
-        "RAN":{},
-        "UDM":{},
-        "SMF":{},
-        "CHF":{},
-        "PCF":{},
-        "其他配置":""
-        }
-    ],
+          "regionsName": 2,
+          "AMF": {
+            "pbucaContainerCount": 20,
+            "pbuca1ContainerCount": 25,
+            "pbuig1ContainerCount": 15,
+            "wholeSystemSGPProcessCount": 50,
+            "amfPbucaSingleVmCaps": 100,
+            "amfPbuca1SingleVmCaps": 100,
+            "pbuig1SingleVmCaps": 100,
+            "pbucaTotalCapacity": 2000,
+            "pbuca1TotalCapacity": 2500,
+            "pbuig1TotalCapacity": 1500,
+            "singleDcPoolAmfElementCapacity": 500,
+            "singleDcPoolAmfElementRegisteredUserCapacity": 500,
+            "singleDcPoolAmfElementActiveUserCapacity": 250,
+            "otherConfig": "暂无"
+          },
+          "RAN": {
+            "CUUP": {
+              "cuupContainerCount": 25,
+              "duContainerCount": 20,
+              "cuupSingleVmCaps": 100,
+              "duSingleVmCaps": 120,
+              "cuupTotalCapacity": 2000,
+              "duTotalCapacity": 1800,
+              "singleDcPoolCuupElementCapacity": 500,
+              "singleDcPoolCuupElementUserCapacity": 500,
+              "singleDcPoolDuElementCapacity": 400,
+              "singleDcPoolDuElementUserCapacity": 400
+            }
+          },
+          "UDM": {
+            "singleDcPoolElementCount": 100,
+            "5GUserLicenseRatio": 0.35,
+            "uisuContainerCount": 12,
+            "uccuContainerCount": 20,
+            "uisuSingleVmCaps": 50,
+            "uccuSingleVmCaps": 50,
+            "udmUisuTotalCapacity": 600,
+            "udmUccuTotalCapacity": 1000,
+            "singleDcPoolUdmElementCapacity": 150
+          },
+          "SMF": {
+            "pbucsContainerCount": 13,
+            "pbucs1ContainerCount": 12,
+            "pbuig1ContainerCount": 10,
+            "pbucsSingleVmCaps": 50,
+            "pbucs1SingleVmCaps": 50,
+            "pbuig1SingleVmCaps": 50,
+            "pbucsTotalCapacity": 650,
+            "pbucs1TotalCapacity": 600,
+            "pbuig1TotalCapacity": 500,
+            "singleDcPoolAmfElementCapacity": 200,
+            "singleDcPoolAmfElementActiveUserCapacity": 250
+          },
+          "CHF": {
+            "pbucnContainerCount": 20,
+            "pbuig1ContainerCount": 15,
+            "pbusg1ContainerCount": 12,
+            "pbusg2ContainerCount": 10,
+            "pbucnSingleVmCaps": 50,
+            "pbuig1SingleVmCaps": 40,
+            "pbusg1SingleVmCaps": 20,
+            "pbusg2SingleVmCaps": 30,
+            "pbucnTotalCapacity": 1000,
+            "pbuig1TotalCapacity": 600,
+            "pbusg1TotalCapacity": 240,
+            "pbusg2TotalCapacity": 300,
+            "singleDcPoolPcfElementCapacity": 100
+          },
+          "PCF": {
+            "upsrvsContainerCount": 50,
+            "upsrvrContainerCount": 35,
+            "upsrvlContainerCount": 25,
+            "upsrvsSingleVmCaps": 10,
+            "upsrvrSingleVmCaps": 10,
+            "upsrvlSingleVmCaps": 10,
+            "upsrvsTotalCapacity": 500,
+            "upsrvrTotalCapacity": 350,
+            "upsrvlTotalCapacity": 250,
+            "singleDcPoolPcfElementCapacity": 100
+          },
+          "otherConfig": {
+            "Note": "暂无"
+          }
+        }],
     "digitalTwinProcess":{
-        "初次入网基本流程":[//基本流程内容无故障
-            {},//多少个用户分别请求大区一AMF、SMF、UDM、PCF、CHF，流程要带时间
-            {},//多少个用户分别请求大区一AMF、SMF、UDM、PCF、CHF
-            //{}.....
-            {}//流程结束
-        ],
-        "故障流程1":[
-            {},//故障事件
-            {},//多少个用户分别请求大区二AMF、SMF、UDM、PCF、CHF，失败接口数量
-            {},//其他事件
-            //{}.....
-            {}//流程结束
-        ],
-        "故障流程2":[]
+      "initialAccessBasicProcess": [
+        {
+          "userRequestNum": 500,
+          "ranToAmfNum": 500,
+          "userRequestNumToAmf": 500,
+          "userRequestNumToUdm": 300,
+          "userRequestNumToSmf": 100,
+          "userRequestNumToChf": 50,
+          "userRequestNumToPcf": 100,
+          "userRequestToAmfTime": "5",
+          "userRequestToUdmTime": "3",
+          "userRequestToSmfTime": "2",
+          "userRequestToChfTime": "2",
+          "userRequestToPcfTime": "4"
+        }
+      ],
+
+      "faultProcess1": [
+        {
+          "userRequestNum": 1000,
+          "faultType": "human error",
+          "humanError": [
+            {
+              "connectedUsers": [
+                {
+                  "ranToAmfNum": 0,
+                  "ranAction": "unable to send RRC message",
+                  "ueAction": "unable to establish connection",
+                  "enodebAction": "send connection request to AMF in another region",
+                  "userRequestNumToAmf": 500,
+                  "failUserRequestNumToAmf": 200,
+                  "userRequestToAmfTime": "5",
+                  "userRequestNumToUdm": 500,
+                  "userRequestNumToSmf": 200,
+                  "userRequestNumToChf": 100,
+                  "userRequestNumToPcf": 100
+                }
+              ],
+              "idleUsers": [
+                {
+                  "userRequestNum": 0,
+                  "ranBehavior": "attempt to reconnect",
+                  "requestAction": "requesting region two for user activation, discrete access to the network",
+                  "userRequestToRanTime": "10",
+                  "userBehaviorModelType1": "major holidays such as Spring Festival and National Day",
+                  "userBehaviorModelType2": "24h daily from Monday to Friday",
+                  "userBehaviorModelType3": "24h daily on Saturdays and Sundays",
+                  "userBehaviorModelType4": "during large events, users gather at a specific location"
+                }
+              ]
+            }
+          ]
+        },
+
+
+        {
+          "userBehaviorModelType1": [
+            {
+              "userNumRange": "1000 to 5000",
+              "communicationFrequency": "high",
+              "communicationPeriod": "concentrated during specific time periods on holidays",
+              "amfRequestNum": 500,
+              "amfSuccessfulRequestNum": 400,
+              "amfFailedRequestNum": 100,
+              "amfRequestTime": "10",
+              "ranRequestNum": 100,
+              "ranSuccessfulRequestNum": 80,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "5",
+              "userRequestNumToUdm": 300,
+              "userRequestNumToSmf": 100,
+              "userRequestNumToChf": 50,
+              "userRequestNumToPcf": 50
+            }
+          ],
+          "userBehaviorModelType2": [
+            {
+              "userNumRange": "5000 to 10000",
+              "communicationFrequency": "medium",
+              "communicationPeriod": "during working hours, lunchtime on weekdays",
+              "amfRequestNum": 800,
+              "amfSuccessfulRequestNum": 700,
+              "amfFailedRequestNum": 100,
+              "amfRequestTime": "12",
+              "ranRequestNum": 150,
+              "ranSuccessfulRequestNum": 130,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "6",
+              "userRequestNumToUdm": 500,
+              "userRequestNumToSmf": 200,
+              "userRequestNumToChf": 100,
+              "userRequestNumToPcf": 100
+            }
+          ],
+          "userBehaviorModelType3": [
+            {
+              "userNumRange": "3000 to 7000",
+              "communicationFrequency": "medium",
+              "communicationPeriod": "morning, afternoon, and evening on weekends",
+              "amfRequestNum": 600,
+              "amfSuccessfulRequestNum": 560,
+              "amfFailedRequestNum": 40,
+              "amfRequestTime": "8",
+              "ranRequestNum": 120,
+              "ranSuccessfulRequestNum": 100,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "4",
+              "userRequestNumToUdm": 400,
+              "userRequestNumToSmf": 150,
+              "userRequestNumToChf": 70,
+              "userRequestNumToPcf": 80
+            }
+          ],
+          "userBehaviorModelType4": [
+            {
+              "userNumRange": "8000 to 12000",
+              "communicationFrequency": "high",
+              "communicationPeriod": "activity time periods during large events",
+              "amfRequestNum": 1000,
+              "amfSuccessfulRequestNum": 920,
+              "amfFailedRequestNum": 80,
+              "amfRequestTime": "15",
+              "ranRequestNum": 200,
+              "ranSuccessfulRequestNum": 180,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "7",
+              "userRequestNumToUdm": 600,
+              "userRequestNumToSmf": 250,
+              "userRequestNumToChf": 100,
+              "userRequestNumToPcf": 150
+            }
+          ]
+        },
+
+        {
+          "faultSituation": "weather issue",
+          "weatherIssue": [
+            {
+              "connectedUsers": [
+                {
+                  "ranToAmfNum": 0,
+                  "ranAction": "send RRC Release information to UE, release wireless connection",
+                  "ueAction": "send ServiceRequest request, enter connection state",
+                  "enodebAction": "send connection request to AMF in another region",
+                  "userRequestNumToAmf": 200,
+                  "failUserRequestNumToAmf": 100,
+                  "userRequestToAmfTime": "8",
+                  "userRequestNumToUdm": 200,
+                  "userRequestNumToSmf": 100,
+                  "userRequestNumToChf": 50,
+                  "userRequestNumToPcf": 50
+                }
+              ],
+              "idleUsers": [
+                {
+                  "userRequestNum": 0,
+                  "ranBehavior": "attempt to reconnect",
+                  "requestAction": "requesting region two for user activation, discrete access to the network",
+                  "userRequestToRanTime": "split within 50min",
+                  "userBehaviorModelType1": "during major holidays such as Spring Festival and National Day",
+                  "userBehaviorModelType2": "24h daily from Monday to Friday",
+                  "userBehaviorModelType3": "24h daily on Saturdays and Sundays",
+                  "userBehaviorModelType4": "during large events, users gather at a specific location"
+                }
+              ]
+            }
+          ],
+          "userBehaviorModelType1": [
+            {
+              "userNumRange": "1000 to 5000",
+              "communicationFrequency": "high",
+              "communicationPeriod": "concentrated during specific time periods on holidays",
+              "amfRequestNum": 500,
+              "amfSuccessfulRequestNum": 400,
+              "amfFailedRequestNum": 100,
+              "amfRequestTime": "10",
+              "ranRequestNum": 100,
+              "ranSuccessfulRequestNum": 80,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "5",
+              "userRequestNumToUdm": 300,
+              "userRequestNumToSmf": 100,
+              "userRequestNumToChf": 50,
+              "userRequestNumToPcf": 50
+            }
+          ],
+          "userBehaviorModelType2": [
+            {
+              "userNumRange": "5000 to 10000",
+              "communicationFrequency": "medium",
+              "communicationPeriod": "during working hours, lunchtime on weekdays",
+              "amfRequestNum": 800,
+              "amfSuccessfulRequestNum": 700,
+              "amfFailedRequestNum": 100,
+              "amfRequestTime": "12",
+              "ranRequestNum": 150,
+              "ranSuccessfulRequestNum": 130,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "6",
+              "userRequestNumToUdm": 500,
+              "userRequestNumToSmf": 200,
+              "userRequestNumToChf": 100,
+              "userRequestNumToPcf": 100
+            }
+          ],
+          "userBehaviorModelType3": [
+            {
+              "userNumRange": "3000 to 7000",
+              "communicationFrequency": "medium",
+              "communicationPeriod": "morning, afternoon, and evening on weekends",
+              "amfRequestNum": 600,
+              "amfSuccessfulRequestNum": 560,
+              "amfFailedRequestNum": 40,
+              "amfRequestTime": "8",
+              "ranRequestNum": 120,
+              "ranSuccessfulRequestNum": 100,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "4",
+              "userRequestNumToUdm": 400,
+              "userRequestNumToSmf": 150,
+              "userRequestNumToChf": 70,
+              "userRequestNumToPcf": 80
+            }
+          ],
+          "userBehaviorModelType4": [
+            {
+              "userNumRange": "8000 to 12000",
+              "communicationFrequency": "high",
+              "communicationPeriod": "activity time periods during large events",
+              "amfRequestNum": 1000,
+              "amfSuccessfulRequestNum": 920,
+              "amfFailedRequestNum": 80,
+              "amfRequestTime": "15",
+              "ranRequestNum": 200,
+              "ranSuccessfulRequestNum": 180,
+              "ranFailedRequestNum": 20,
+              "ranRequestTime": "7",
+              "userRequestNumToUdm": 600,
+              "userRequestNumToSmf": 250,
+              "userRequestNumToChf": 100,
+              "userRequestNumToPcf": 150
+            }
+          ]
+        }
+
+      ]
+
+
+                    },
+
+  "faultProcess2": [
+    {
+      "userRequestNum": 1000,
+      "faultSituation": "large number of users rush when Region 1 fails",
+      "connectedUsers": [
+        {
+          "ranIdentifyAmfFaultTime": "20240416 14:00:00",
+          "ranReleaseRrcTime": "20240416 14:10:00",
+          "firstImpactStartTime": "20240416 14:15:00",
+          "usersReceivedByRegion2DuringFirstImpactPerSecondOrPerMillisecond": 50,
+          "attachRequestsReceivedByRegion2DuringFirstImpactPerSecondOrPerMillisecond": 20,
+          "successfulAttachUsersDuringFirstImpact": 30,
+          "failedAttachUsersDuringFirstImpact": 10,
+          "trendOfImpactOnN2InterfaceDuringFirstImpact": "increase",
+          "secondImpactStartTime": "20240416 14:30:00",
+          "usersReceivedByRegion2DuringSecondImpactPerSecondOrPerMillisecond": 70,
+          "attachRequestsReceivedByRegion2DuringSecondImpactPerSecondOrPerMillisecond": 25,
+          "successfulAttachUsersDuringSecondImpact": 40,
+          "failedAttachUsersDuringSecondImpact": 15,
+          "trendOfImpactOnN2InterfaceDuringSecondImpact": "fluctuate"
+        }
+      ]
     }
+  ],
+  "flowControlModel": [
+    {
+      "interAmfRegistrationTotalFlowControlThreshold": "control the processing rate of Registration Request (Initial carrying 5GGUTI) messages for non-local AMF users",
+      "interAmfRegistrationTotalFlowControlThresholdParams": {
+        "processingRateThreshold": 100,
+        "effectiveTimePeriod": "valid all day",
+        "effectiveDate": "20240416",
+        "note": "to prevent users on the faulty AMF from accessing other normal AMFs and causing impacts"
+      },
+      "interAmfSrFlowControlParams": "control the processing rate of Service Request messages for non-local AMF users",
+      "interAmfSrFlowControlParamsParams": {
+        "processingRateThreshold": 50,
+        "effectiveTimePeriod": "valid all day",
+        "effectiveDate": "20240416",
+        "note": "to prevent users on the faulty AMF from accessing other normal AMFs and causing impacts"
+      }
+    }
+  ]
 }
+
+
+
+
+
+
+
