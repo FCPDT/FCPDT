@@ -73,5 +73,5 @@ onLoop(({ dt }) => {
 </script>
 
 <template>
-	<primitive :object="objCloud" :position="[-130, 36, 20]" :renderOrder="3001" />
+	<primitive :object="objCloud" :position="[280, 36, 20]" :renderOrder="3001" />
 </template>
