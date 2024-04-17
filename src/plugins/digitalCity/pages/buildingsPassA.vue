@@ -11,9 +11,57 @@
 	<pagesShow :disableRender="true" :showAxesHelper="false">
 		<template v-slot:ability>
 			<buildingsPassA v-bind="passState" />
+      <Suspense >
+				<fireB v-if="fireShowBase==true"/>
+			</Suspense>
+      <Suspense >
+				<fireC v-if="fireShowBase==true"/>
+			</Suspense>
+      <Suspense>
+				<precipitation v-if="fireShowBase==true" v-bind="toRefsState" />
+		</Suspense>
+      <!-- 设备正常状态 -->
+      //各类场景添加
+<!-- const fireShowBase = ref(false);//火灾场景 
+
+
+const noguzhang1ShowBase = ref(false);//大区一正常场景 
+const guzhang1ShowBase = ref(false);//大区一故障场景 
+const noGuzhangShowBase = ref(false);//大区二非故障场景 
+
+const snowShowBase = ref(false);//雪灾场景  -->
+      <Suspense>
+				<markA v-if="noguzhang1ShowBase" :position="[470, 30, -50]" :scale="0.13" img="./plugins/digitalCity/image/znsba.png" :foremost="false" />
+			</Suspense>
+			<radraA v-if="noguzhang1ShowBase" :size="200" :radius="200" :position="[470, 30, -50]" color="#66ffff" />
+      <!-- //设备故障状态 -->
+      <Suspense>
+				<markA v-if="guzhang1ShowBase" :position="[470, 30, -50]" :scale="200" img="./plugins/digitalCity/image/znsb-err.png" :foremost="true" :sizeAttenuation="true" />
+			</Suspense>
+			<radraA v-if="guzhang1ShowBase" :size="200" :radius="200" :position="[470, 30, -50]" color="#ff0000" />
+      <!-- 大区二设备 -->
+			<Suspense>
+				<markA v-if="noGuzhangShowBase" :position="[-410, 19, -260]" :scale="200" img="./plugins/digitalCity/image/znsb-err.png"
+					:sizeAttenuation="true" :foremost="true" />
+			</Suspense>
+			<radraB v-if="noGuzhangShowBase" :position="[-410, 19, -260]" :height="60" color="#ff0000" />
 		</template>
+    
+    <!-- <template v-slot:ability>
+			<Suspense>
+				<fireB />
+			</Suspense>
+		</template> -->
 	</pagesShow>
   <div class="bottomLight">
+    <div class="bottomLightTipF">
+        <div class="bottomLightTipFCenter">
+          <el-icon :class="CircleCheckFilledxuanz" :style="{
+                    color: CircleCheckFilledc
+                  }"><Loading /></el-icon>
+        </div>
+        
+    </div>
     <div class="bottomLightTipF">
         <div class="bottomLightTipFCenter">
           <el-icon :style="{
@@ -199,7 +247,7 @@
          <template #footer>
 			<div class="dialog-footer">
 				<el-button  type="info" @click="dialogWholeLatencyVisible = false" size="large">关闭</el-button>
-				<el-button v-show="sysMesStates" type="success" @click="startTis" size="large">开始</el-button>
+				<el-button v-show="sysMesStates" type="success" @click="handleEndFile" size="large">开始</el-button>
 			</div>
 		 </template>
   </el-dialog>
@@ -296,10 +344,15 @@
 <script setup lang="ts">
 import pagesShow from '../components/pagesShow.vue'
 import buildingsPassA from '../components/buildings/buildingsPassA.vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { reactive,ref } from 'vue'
+import fireB from '../components/fire/fireB.vue'//火灾
+import fireC from '../components/fire/fireC.vue'//火灾
+import precipitation from '../components/weather/precipitation.vue';//极寒天气
+import { ElMessage, ElMessageBox,ElLoading  } from 'element-plus'
+import { reactive,ref, toRefs } from 'vue'
 import { Pane } from 'tweakpane'
-
+import markA from '../components/buildings/buildingsMarkA.vue'
+import radraA from '../components/radras/radraA.vue'
+import radraB from '../components/radras/radraB.vue'
 import { genFileId } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
 
@@ -307,37 +360,96 @@ import {
   CircleCheckFilled,
   WarningFilled,
   InfoFilled,
+  Loading
 } from "@element-plus/icons-vue";
+import { el, fa } from 'element-plus/es/locale';
+
+
+const precipitationState = reactive({
+	speed: 12,
+	size: 15,
+	count: 6000,
+	color: '#fff',
+	type: 'snow',	// snow rain point
+})
+const areaXYZ = reactive({
+	areaX: 1500,
+	areaY: 1000,
+	areaZ: 1500,
+})
+const toRefsState = reactive({
+	...toRefs(precipitationState),
+	...toRefs(areaXYZ),
+})
 //文件上传
 const upload = ref<UploadInstance>()
-
+//底部灯光icon控制
 let CircleCheckFilledc = ref("black");
 let CircleCheckFilledw = ref("black");
 let CircleCheckFilledi = ref("black");
 
+let CircleCheckFilledcl = ref("black");//加载按钮
+let CircleCheckFilledxuanz = ref("");//加载旋转按钮
+
+const changeCircleCheckFilledcl = () => {
+  if(CircleCheckFilledcl.value == "black"){
+    CircleCheckFilledcl.value = "#15ff00" ;
+  }
+  else{
+    CircleCheckFilledcl.value = "black";
+  }
+}
 const changeCircleCheckFilledc = () => {
-    CircleCheckFilledc.value = "#15ff00"
+  if(CircleCheckFilledc.value == "black"){
+    CircleCheckFilledc.value = "#15ff00" ;
+  }
+  else{
+    CircleCheckFilledc.value = "black";
+  }
+}
+//旋转开启关闭
+const changeCircleCheckFilledxuanz = () => {
+  if(CircleCheckFilledxuanz.value == "is-loading"){
+    CircleCheckFilledxuanz.value = "" ;
+  }
+  else{
+    CircleCheckFilledxuanz.value = "is-loading";
+  }
 }
 const changeCircleCheckFilledw = () => {
-    CircleCheckFilledw.value = "red"
+  if(CircleCheckFilledw.value == "black"){
+    CircleCheckFilledw.value = "red";
+  }else{
+    CircleCheckFilledw.value = "black";
+  }
+    
 }
 const changeCircleCheckFilled1 = () => {
-    CircleCheckFilledi.value = "#fff200"
+  if(CircleCheckFilledi.value = "#black"){
+    CircleCheckFilledi.value = "#fff200";
+  }else{
+    CircleCheckFilledi.value = "#black";
+  }
+    
 }
-
+//临时控制加载效果
 const handleExceedChange = () => {
   console.log(1111);
+  changeCircleCheckFilledcl();
+  changeCircleCheckFilledxuanz();
   changeCircleCheckFilledc();
   changeCircleCheckFilledw();
   changeCircleCheckFilled1();
+  fireShowBase.value = true;
   setTimeout(() => {
     CircleCheckFilledc.value = "black";
     CircleCheckFilledw.value = "black";
     CircleCheckFilledi.value = "black";
-  }, 1000);
+     fireShowBase.value = false;
+  }, 3000);
   console.log(1112);
 }
-
+//文件上传修改
 const handleExceed: UploadProps['onExceed'] = (files) => {
   upload.value!.clearFiles()
   const file = files[0] as UploadRawFile
@@ -353,7 +465,7 @@ let sysMesStatesContent= ref("");
 const submitUpload = () => {
   upload.value!.submit()
 }
-
+//弹出框下一步控制
 const activeName = ref("1");
 
 let nodeMesVisList = reactive([
@@ -411,9 +523,55 @@ let nodeMesVisList = reactive([
 //导入后的按钮可视化
 let sysMesStates =  ref(false);
 //发生改变的情况
+//文件读取
+let fileList =  reactive([{}]);
+
+let dataJson = reactive({});
 const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
+  fileList = uploadFiles;
   sysMesStates.value = true;
 }
+
+const handleEndFile = () => {
+  let reader = new FileReader(); //新建一个FileReader
+  reader.readAsText(fileList[0].raw, "UTF-8"); //读取文件
+  reader.onload = (evt) => {
+    //读取文件完毕执行此函数
+    try {
+      const locakDataJson = JSON.parse(evt.target.result);
+      dataJson= locakDataJson;
+      console.log(locakDataJson);
+      dialogWholeLatencyVisible.value = false;
+      const loading = ElLoading.service({
+        lock: true,
+        text: '加载中......',
+        background: 'rgba(0, 0, 0, 0.7)',
+      })
+      setTimeout(() => {
+        loading.close();
+        // startDigController();
+      }, 3000)
+      // dataJson 就是读取的文件内容
+    } catch (error) {
+      ElMessageBox.alert('解析JSON时出错(JSON文件格式错误)：'+error, 'Title', {
+        // if you want to disable its autofocus
+        // autofocus: false,
+        confirmButtonText: 'OK',
+      })
+      // 在这里处理错误
+    }
+  };
+}
+
+
+const open = () => {
+  ElMessageBox.alert('This is a message', 'Title', {
+    // if you want to disable its autofocus
+    // autofocus: false,
+    confirmButtonText: 'OK',
+  })
+}
+
 //删除文件
 const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
   sysMesStates.value = false;
@@ -461,7 +619,7 @@ const passState = reactive({
 	uScalenum: 250,
 	uScaleone: 82,
 	uWidth: 0.2,
-	speed: 10.0,
+	speed: 2.0,
 	uPosition: { x: 0, y: 0 },
 })
 
@@ -514,6 +672,53 @@ paneControl.addBinding(passState, 'uPosition', {
 //   methods: {},
 
 // }
+
+
+//各类场景添加
+const fireShowBase = ref(false);//火灾场景 
+
+
+const noguzhang1ShowBase = ref(true);//大区一正常场景 
+const guzhang1ShowBase = ref(true);//大区一故障场景 
+const noGuzhangShowBase = ref(true);//大区二非故障场景 
+
+const snowShowBase = ref(false);//雪灾场景 
+
+
+const handleFireStart = () => {
+  fireShowBase.value = true;
+}
+const handleFireEnd = () => {
+  fireShowBase.value =false;
+}
+
+const handle1guzhangShowBaseEnd = () => {
+  guzhang1ShowBase.value = false;
+}
+const handle1guzhangShowBaseStart = () => {
+  guzhang1ShowBase.value = true;
+}
+
+const handlenoguzhangShowBaseEnd = () => {
+  noguzhang1ShowBase.value = false;
+}
+const handlenoguzhangShowBaseStart = () => {
+  noguzhang1ShowBase.value = true;
+}
+const handleNoGuStart = () => {
+  noGuzhangShowBase.value   = true;
+}
+const handleNoGuEnd = () => {
+  noGuzhangShowBase.value = false;
+}
+
+const handleSnowStart = () => {
+  snowShowBase.value = true;
+}
+const handleSnowEnd = () => {
+  snowShowBase.value  = false;
+}
+
 </script>
 
 <style>
@@ -544,19 +749,10 @@ paneControl.addBinding(passState, 'uPosition', {
   height: 100px;
   bottom: 10px;
 }
+
 .bottomLightTipF{
   float: left;
-  width: 33%;
-  height: 100px;
-  opacity: 0.8;
-  display: flex; 
-  justify-content: center;
-  
-  font-size: 40px;
-}
-.bottomLightTipF{
-  float: left;
-  width: 33%;
+  width: 24%;
   height: 100px;
   opacity: 0.8;
   display: flex; 
@@ -566,7 +762,7 @@ paneControl.addBinding(passState, 'uPosition', {
 }
 .bottomLightTipFCenter{
   display: flex; 
-  width: 9%;
+  width: 13%;
   height: 70%;
   border-radius:50%;
   justify-content: center;

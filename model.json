@@ -188,18 +188,65 @@
     "digitalTwinProcess":{
       "initialAccessBasicProcess": [
         {
-          "userRequestNum": 500,
+          "userRequestNum": 500,//这个改成总体请求，
           "ranToAmfNum": 500,
           "userRequestNumToAmf": 500,
-          "userRequestNumToUdm": 300,
-          "userRequestNumToSmf": 100,
-          "userRequestNumToChf": 50,
-          "userRequestNumToPcf": 100,
-          "userRequestToAmfTime": "5",
-          "userRequestToUdmTime": "3",
-          "userRequestToSmfTime": "2",
-          "userRequestToChfTime": "2",
-          "userRequestToPcfTime": "4"
+          "userRequestNumToUdm": 0,
+          "userRequestNumToSmf": 0,
+          "userRequestNumToChf": 0,
+          "userRequestNumToPcf": 0,
+          "userCment":0,
+          "userRequestToAmfTime": 100,
+          "userRequestToUdmTime": 100,//这里的时间可以设置为和userRequestToAmfTime一样的时间，数组内每个元素发生的时间相同
+          "userRequestToSmfTime": 100,
+          "userRequestToChfTime": 100,
+          "userRequestToPcfTime": 100,
+        },
+        {
+          "userRequestNum": 700,
+          "ranToAmfNum": 200,
+          "userRequestNumToAmf": 200,
+          "userRequestNumToUdm": 500,
+          "userRequestNumToSmf": 0,
+          "userRequestNumToChf": 0,
+          "userRequestNumToPcf": 0,
+          "userCment":0,
+          "userRequestToAmfTime": 200,
+          // "userRequestToUdmTime": "3",
+          // "userRequestToSmfTime": "2",
+          // "userRequestToChfTime": "2",
+          // "userRequestToPcfTime": "4"
+        }
+        // 省略号。。。。。。。。。。。。。。。
+        {
+          "userRequestNum": 1000,
+          "ranToAmfNum": 0,
+          "userRequestNumToAmf": 0,
+          "userRequestNumToUdm": 0,
+          "userRequestNumToSmf": 0,
+          "userRequestNumToChf": 200,
+          "userRequestNumToPcf": 300,
+          "userCment":500,
+          "userRequestToAmfTime": 600,
+          // "userRequestToUdmTime": "3",
+          // "userRequestToSmfTime": "2",
+          // "userRequestToChfTime": "2",
+          // "userRequestToPcfTime": "4"
+        }
+        {
+          "userRequestNum": 1000,
+          "ranToAmfNum": 0,
+          "userRequestNumToAmf": 0,
+          "userRequestNumToUdm": 0,
+          "userRequestNumToSmf": 0,
+          "userRequestNumToChf": 0,
+          "userRequestNumToPcf": 0,
+          "userCment":1000,
+          "userRequestToAmfTime": 700,
+          // "userRequestToUdmTime": "3",
+          // "userRequestToSmfTime": "2",
+          // "userRequestToChfTime": "2",
+          // "userRequestToPcfTime": "4"
         }
       ],
 
