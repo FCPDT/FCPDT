@@ -719,6 +719,60 @@ const handleSnowEnd = () => {
   snowShowBase.value  = false;
 }
 
+//550行startDigController（）函数
+const startDigController = () => {
+  // 环境参数配置
+  const environmentConfig = () => {
+    // 在这里进行环境参数配置
+    console.log('环境参数配置...');
+  };
+
+  // 初始化用户入网大区一流程
+  const initializeUserNetwork = () => {
+    // 在这里进行初始化用户入网大区一流程
+    console.log('初始化用户入网大区一流程...');
+  };
+
+  // 故障流程
+  const faultProcess = () => {
+    // 判断是否发生故障
+    const isFault = true; // 根据实际情况进行判断
+
+    if (isFault) {
+      // 雪灾和火灾图像要求同时出现
+      snowShowBase.value = true;
+      fireShowBase.value = true;
+      // 地图中显示智能设备故障
+      mapShowFault.value = true;
+      // 第二个灯灭
+      CircleCheckFilledb.value = "black";
+      // 第三个灯亮起
+      CircleCheckFilledc.value = "red";
+      console.log('故障流程...');
+
+      // 故障流程结束后开始向大区二请求
+      // 第三个图标灭
+      CircleCheckFilledc.value = "black";
+      // 第四个亮起
+      CircleCheckFilledd.value = "red";
+      console.log('向大区二请求...');
+    }
+  };
+
+  // 开始执行流程
+  environmentConfig(); // 环境参数配置
+  initializeUserNetwork(); // 初始化用户入网大区一流程
+  faultProcess(); // 故障流程
+
+  // 界面开始后左下角第一个图标要求亮起并旋转
+  CircleCheckFilleda.value = "red";
+  // 事件列表中基本消息出现内容，即环境参数配置内容消息
+  dialogWholeLatencyVisible.value = true;
+  dialogWholeLatencyContent.value = "环境参数配置内容消息";
+  console.log('环境参数配置...');
+};
+
+
 </script>
 
 <style>
@@ -831,4 +885,4 @@ el-collapse {
         background-color: #565853 !important;
         border-bottom: 1px solid #393a37;
     }
-</style>>
+</style>
