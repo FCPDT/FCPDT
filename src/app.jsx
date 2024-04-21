@@ -13,6 +13,7 @@ import chalk from 'chalk'
 import PageLoading from '@/components/pageLoading.vue'
 import UserCenter from '@/components/forPreview/userCenter.vue'
 import ElementPlus from 'element-plus'
+import CScrollbar from 'c-scrollbar';
 import 'element-plus/dist/index.css'
 // add by 地虎降天龙
 import 'uno.css'
@@ -45,6 +46,7 @@ export function onAppCreated ({ app }) {
     app.use(FMenu)
     app.use(Tres)
     app.use(ElementPlus)
+    app.use(CScrollbar)
     // if (process.env.FES_APP_PLUGINS === 'true') { 
         console.log(chalk.hex('#1c86e5')(`
      ░▒▓████████▓▒░ ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓████████▓▒░                 ░▒▓█▓▒░  ░▒▓███████▓▒░ 

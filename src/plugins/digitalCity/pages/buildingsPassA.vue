@@ -41,10 +41,10 @@ const snowShowBase = ref(false);//雪灾场景  -->
 			<radraA v-if="guzhang1ShowBase" :size="200" :radius="200" :position="[470, 30, -50]" color="#ff0000" />
       <!-- 大区二设备 -->
 			<Suspense>
-				<markA v-if="noGuzhangShowBase" :position="[-410, 19, -260]" :scale="200" img="./plugins/digitalCity/image/znsb-err.png"
-					:sizeAttenuation="true" :foremost="true" />
+				<markA v-if="noGuzhangShowBase" :position="[-410, 19, -260]" :scale="0.13" img="./plugins/digitalCity/image/znsbb.png"
+					:foremost="false" />
 			</Suspense>
-			<radraB v-if="noGuzhangShowBase" :position="[-410, 19, -260]" :height="60" color="#ff0000" />
+			<radraB v-if="noGuzhangShowBase" :position="[-410, 19, -260]" :height="60" color="#66ffff" />
 		</template>
     
     <!-- <template v-slot:ability>
@@ -57,7 +57,7 @@ const snowShowBase = ref(false);//雪灾场景  -->
     <div class="bottomLightTipF">
         <div class="bottomLightTipFCenter">
           <el-icon :class="CircleCheckFilledxuanz" :style="{
-                    color: CircleCheckFilledc
+                    color: CircleCheckFilledcl
                   }"><Loading /></el-icon>
         </div>
         
@@ -68,7 +68,8 @@ const snowShowBase = ref(false);//雪灾场景  -->
                     color: CircleCheckFilledc
                   }"><CircleCheckFilled /></el-icon>
         </div>
-        <button @click="handleExceedChange"> sss</button>
+        <!-- <button @click="handleExceedChange"> sss</button> -->
+        <!-- 测试按钮 -->
         
     </div>
     <div class="bottomLightTipF">
@@ -91,7 +92,8 @@ const snowShowBase = ref(false);//雪灾场景  -->
 
 <div class="bs-sysMsg">
         <span style="font-weight: bold;line-height:50px;font-size:23px"
-          ><span v-show="sysDidMesStates == false">事件列表</span>
+          ><span v-show="sysDidMesStates == false">事件列表</span>   <!-- 查看环境 -->
+          <el-button text type="success" @click="CheckSim">查看环境</el-button>
         </span>
         <el-collapse v-model="activeName" accordion>
           <el-collapse-item  name="1">
@@ -181,7 +183,7 @@ const snowShowBase = ref(false);//雪灾场景  -->
               <!-- <span>点击查看区块消息</span> -->
             </template>
             <c-scrollbar maxHeight="280px" height="280px" trigger="hover">
-              <div v-for="item in blockMesVisList" class="event-content">
+              <div v-for="item in fixMesVisList" class="event-content">
                 <div class="event-mes-block-node">
                   {{ item.mes }}
                 </div>
@@ -196,11 +198,42 @@ const snowShowBase = ref(false);//雪灾场景  -->
           </el-collapse-item>
         </el-collapse>
       </div>
+    <div></div>
+	
 
-  
+  <!-- 查看环境 -->
+  <el-dialog
+    v-model="dialogCheckSimVisible"
+    :show-close="false"
+    width="50%"
+	center
+  >
+  <template #header="{ titleId, titleClass }">
+      <div class="my-header">
+        <span style="font-size:28px" :id="titleId" :class="titleClass">流程控制环境参数</span>
+        
+      </div>
+   </template>
+		<el-descriptions title="环境参数">
+    <el-descriptions-item label="大区数">2</el-descriptions-item>
+    <el-descriptions-item label="用户数量">18100000000</el-descriptions-item>
+    <el-descriptions-item label="当前场景">正常运行</el-descriptions-item>
+    <el-descriptions-item label="Remarks">
+      <el-tag size="small">Simulate</el-tag>
+    </el-descriptions-item>
+    <el-descriptions-item label="Address">
+      No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province
+    </el-descriptions-item>
+  </el-descriptions>
+		 
+         <template #footer>
+			<div class="dialog-footer">
+				<el-button  type="info" @click="dialogCheckSimVisible = false" size="large">关闭</el-button>
+			</div>
+		 </template>
+  </el-dialog>
 
-
-
+<!-- 流程控制 -->
 
   <el-dialog
     v-model="dialogWholeLatencyVisible"
@@ -360,7 +393,8 @@ import {
   CircleCheckFilled,
   WarningFilled,
   InfoFilled,
-  Loading
+  Loading,
+  MoreFilled
 } from "@element-plus/icons-vue";
 import { el, fa } from 'element-plus/es/locale';
 
@@ -471,43 +505,28 @@ const activeName = ref("1");
 let nodeMesVisList = reactive([
       {
         id: 0,
-        content: "节点消息创建",
-        mes: "节点消息创建",
+        content: "基本消息创建",
+        mes: "基本消息创建",
         type: "normalMes",
-        contentMessage: {
-          blockDetail: { blockId: "", blockHeight: "", blockHash: "" },
-          tradeTime: "",
-          content: { id: null, mes: "区块消息创建" },
-          id: null,
-          type: "normalMes",
-          isOrphan: "false",
-          from: "1",
-          to: "2",
-          miner: "0",
-          confirmId: null,
-          transactionId: "0",
-        },
+        
       },
     ]);
     let blockMesVisList = reactive([
       {
         id: 0,
-        content: { mes: "区块消息创建" },
+        content: "区块消息创建" ,
         mes: "节点消息创建",
         type: "normalMes",
-        contentMessage: {
-          blockDetail: { blockId: "", blockHeight: "", blockHash: "" },
-          tradeTime: "",
-          content: { id: null, mes: "区块消息创建", blockId: "" },
-          id: null,
-          type: "normalMes",
-          from: "1",
-          to: "2",
-          miner: "0",
-          confirmId: null,
-          isOrphan: "false",
-          transactionId: "0",
-        },
+        
+      },
+    ]);
+    let fixMesVisList = reactive([
+      {
+        id: 0,
+        content: "区块消息创建" ,
+        mes: "节点消息创建",
+        type: "normalMes",
+       
       },
     ]);
 
@@ -531,7 +550,18 @@ const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
   fileList = uploadFiles;
   sysMesStates.value = true;
 }
+//全局加载参数
+//全局加载事件
+ const openFullScreen = (mes:string) => {
+      const loading = ElLoading.service({
+        lock: true,
+        text: mes,
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      return loading;
+};
 
+//完成操作
 const handleEndFile = () => {
   let reader = new FileReader(); //新建一个FileReader
   reader.readAsText(fileList[0].raw, "UTF-8"); //读取文件
@@ -542,14 +572,10 @@ const handleEndFile = () => {
       dataJson= locakDataJson;
       console.log(locakDataJson);
       dialogWholeLatencyVisible.value = false;
-      const loading = ElLoading.service({
-        lock: true,
-        text: '加载中......',
-        background: 'rgba(0, 0, 0, 0.7)',
-      })
+      let loading = openFullScreen("加载中......");
       setTimeout(() => {
         loading.close();
-        // startDigController();
+        startDigController(locakDataJson);
       }, 3000)
       // dataJson 就是读取的文件内容
     } catch (error) {
@@ -563,6 +589,182 @@ const handleEndFile = () => {
   };
 }
 
+
+//各类场景添加
+const fireShowBase = ref(false);//火灾场景 
+
+
+const noguzhang1ShowBase = ref(false);//大区一正常场景 
+const guzhang1ShowBase = ref(false);//大区一故障场景 
+const noGuzhangShowBase = ref(false);//大区二非故障场景 
+
+const snowShowBase = ref(false);//雪灾场景 
+
+
+const handleFireStart = () => {
+  fireShowBase.value = true;
+}
+const handleFireEnd = () => {
+  fireShowBase.value =false;
+}
+
+const handle1guzhangShowBaseEnd = () => {
+  guzhang1ShowBase.value = false;
+}
+const handle1guzhangShowBaseStart = () => {
+  guzhang1ShowBase.value = true;
+}
+
+const handlenoguzhangShowBaseEnd = () => {
+  noguzhang1ShowBase.value = false;
+}
+const handlenoguzhangShowBaseStart = () => {
+  noguzhang1ShowBase.value = true;
+}
+const handleNoGuStart = () => {
+  noGuzhangShowBase.value   = true;
+}
+const handleNoGuEnd = () => {
+  noGuzhangShowBase.value = false;
+}
+
+const handleSnowStart = () => {
+  snowShowBase.value = true;
+}
+const handleSnowEnd = () => {
+  snowShowBase.value  = false;
+}
+
+
+
+//开始流程、1、环境配置
+const startDigController = (locakDataJson:any) => {
+  //1、环境配置 2、正常流程 3、故障发生 4、换网
+  // let list = ["全局环境配置中...","大区A正常入网...","故障出现...","大区A向大区B换网中...",];
+  let loadings = openFullScreen("全局环境配置中...");
+
+   setTimeout(() => {
+      loadings.close();
+     let confingL = 2//locakDataJson.listOfRegions.length读取大区数量
+     changeCircleCheckFilledcl();//加载
+     changeCircleCheckFilledxuanz();//加载旋转
+     handlenoguzhangShowBaseStart();//大区一正常运行
+      for(let i=1;i<=confingL;i++){
+        setTimeout(() => {
+          nodeMesVisList.unshift({
+          id: 0,
+          content: "大区"+i+"全局环境配置中",
+          mes: "大区"+i+"全局环境配置中",
+          type: "normalMes",
+        })
+          if(confingL==i){
+            startRuwangAController()//开始全局环境配置
+          }
+        }, 2000*i)
+      }
+
+   }, 2000)//2s加载时间
+ 
+        
+  }
+
+
+
+//大区A正常入网...
+const startRuwangAController = () => {
+  let loadings = openFullScreen("大区A正常入网中...");
+  changeCircleCheckFilledc();
+  setTimeout(() => {
+      loadings.close();
+      let confingL = 8//入网消息数量
+      for(let i=1;i<=confingL;i++){
+        setTimeout(() => {
+          nodeMesVisList.unshift({
+            id: 0,
+            content: "基本入网行为"+i+"完成操作",
+            mes: "基本入网行为"+i+"完成操作",
+            type: "normalMes",
+          })
+          if(confingL==i){
+            startGuZhangController()//故障出现
+          }
+        }, 2000*i)
+      }
+  },2000)
+}
+//故障出现...
+const startGuZhangController = () => {
+  let loadings = openFullScreen("大区A发生故障，信令风暴发生中...");
+  changeCircleCheckFilledc();//关闭正常情况
+  changeCircleCheckFilledw();//故障按钮开启
+  handlenoguzhangShowBaseEnd();//关闭正常情况
+  handle1guzhangShowBaseStart()//开启设备故障场景
+  handleFireStart() //开启实体故障场景
+  handleSnowStart()//开启天气故障场景
+  nodeMesVisList.unshift({
+            id: 0,
+            content: "信令风暴发生",
+            mes: "信令风暴发生",
+            type: "normalMes",
+ })
+  setTimeout(() => {
+      loadings.close();
+      let confingL = 8//入网消息数量
+      for(let i=1;i<=confingL;i++){
+        setTimeout(() => {
+          nodeMesVisList.unshift({
+            id: 0,
+            content: "用户群"+i+"入网失败",
+            mes: "用户群"+i+"入网失败",
+            type: "normalMes",
+          })
+          if(confingL==i){
+            startFixController()//修复事务发生
+          }
+        }, 2000*i)
+      }
+  },2000)
+}
+//大区A向大区B换网中...
+const startFixController = () => {
+  let loadings = openFullScreen("故障修复，换网中...");
+  // changeCircleCheckFilledc();//关闭正常情况
+  changeCircleCheckFilledw();//故障按钮关闭
+  changeCircleCheckFilled1();//修复灯光开启
+  // handlenoguzhangShowBaseEnd();//关闭正常情况
+  handleNoGuStart()//开启大区B
+  nodeMesVisList.unshift({
+            id: 0,
+            content: "修复流程开始",
+            mes: "修复流程开始",
+            type: "normalMes",
+ })
+  setTimeout(() => {
+      loadings.close();
+      let confingL = 6//入网消息数量
+      for(let i=1;i<=confingL;i++){
+        setTimeout(() => {
+          nodeMesVisList.unshift({
+            id: 0,
+            content: "用户群"+i+"入网大区成功",
+            mes: "用户群"+i+"入网大区成功",
+            type: "normalMes",
+          })
+          if(confingL==i){
+            //修复事务完成
+            let loadingss = openFullScreen("故障修复完成");
+            setTimeout(() => {
+              loadingss.close();
+              changeCircleCheckFilledc();//开启正常灯光
+              changeCircleCheckFilled1();//修复灯光关闭
+              handleFireEnd() //关闭实体故障场景
+              handleSnowEnd()//关闭天气故障场景
+            },1500)
+          }
+        }, 2000*i)
+      }
+  },2000)
+}
 
 const open = () => {
   ElMessageBox.alert('This is a message', 'Title', {
@@ -590,6 +792,13 @@ const dialogWholeSimVisible = ref(false);
 //流程控制配置选择
  const dialogWholeLatencyVisible = ref(true);
 let activeIndex = ref(0);
+
+const dialogCheckSimVisible= ref(false);
+
+const CheckSim = () => {
+      dialogCheckSimVisible.value = true;
+      //基本数据导入
+};
 
 const nextEnd = () => {
       dialogWholeSimVisible.value = false;
@@ -674,104 +883,6 @@ paneControl.addBinding(passState, 'uPosition', {
 // }
 
 
-//各类场景添加
-const fireShowBase = ref(false);//火灾场景 
-
-
-const noguzhang1ShowBase = ref(true);//大区一正常场景 
-const guzhang1ShowBase = ref(true);//大区一故障场景 
-const noGuzhangShowBase = ref(true);//大区二非故障场景 
-
-const snowShowBase = ref(false);//雪灾场景 
-
-
-const handleFireStart = () => {
-  fireShowBase.value = true;
-}
-const handleFireEnd = () => {
-  fireShowBase.value =false;
-}
-
-const handle1guzhangShowBaseEnd = () => {
-  guzhang1ShowBase.value = false;
-}
-const handle1guzhangShowBaseStart = () => {
-  guzhang1ShowBase.value = true;
-}
-
-const handlenoguzhangShowBaseEnd = () => {
-  noguzhang1ShowBase.value = false;
-}
-const handlenoguzhangShowBaseStart = () => {
-  noguzhang1ShowBase.value = true;
-}
-const handleNoGuStart = () => {
-  noGuzhangShowBase.value   = true;
-}
-const handleNoGuEnd = () => {
-  noGuzhangShowBase.value = false;
-}
-
-const handleSnowStart = () => {
-  snowShowBase.value = true;
-}
-const handleSnowEnd = () => {
-  snowShowBase.value  = false;
-}
-
-//550行startDigController（）函数
-const startDigController = () => {
-  // 环境参数配置
-  const environmentConfig = () => {
-    // 在这里进行环境参数配置
-    console.log('环境参数配置...');
-  };
-
-  // 初始化用户入网大区一流程
-  const initializeUserNetwork = () => {
-    // 在这里进行初始化用户入网大区一流程
-    console.log('初始化用户入网大区一流程...');
-  };
-
-  // 故障流程
-  const faultProcess = () => {
-    // 判断是否发生故障
-    const isFault = true; // 根据实际情况进行判断
-
-    if (isFault) {
-      // 雪灾和火灾图像要求同时出现
-      snowShowBase.value = true;
-      fireShowBase.value = true;
-      // 地图中显示智能设备故障
-      mapShowFault.value = true;
-      // 第二个灯灭
-      CircleCheckFilledb.value = "black";
-      // 第三个灯亮起
-      CircleCheckFilledc.value = "red";
-      console.log('故障流程...');
-
-      // 故障流程结束后开始向大区二请求
-      // 第三个图标灭
-      CircleCheckFilledc.value = "black";
-      // 第四个亮起
-      CircleCheckFilledd.value = "red";
-      console.log('向大区二请求...');
-    }
-  };
-
-  // 开始执行流程
-  environmentConfig(); // 环境参数配置
-  initializeUserNetwork(); // 初始化用户入网大区一流程
-  faultProcess(); // 故障流程
-
-  // 界面开始后左下角第一个图标要求亮起并旋转
-  CircleCheckFilleda.value = "red";
-  // 事件列表中基本消息出现内容，即环境参数配置内容消息
-  dialogWholeLatencyVisible.value = true;
-  dialogWholeLatencyContent.value = "环境参数配置内容消息";
-  console.log('环境参数配置...');
-};
-
 
 </script>
 
@@ -816,8 +927,8 @@ const startDigController = () => {
 }
 .bottomLightTipFCenter{
   display: flex; 
-  width: 13%;
-  height: 70%;
+  width: 60px;
+  height: 60px;
   border-radius:50%;
   justify-content: center;
   background-color: aliceblue;
@@ -831,7 +942,7 @@ const startDigController = () => {
   border: 1px solid #565853;
   position: absolute;
   background-color: #565853;
-  width: 19%;
+  width: 15%;
   height: auto;
   z-index: 999;
   padding: 0 1%;
@@ -885,4 +996,18 @@ el-collapse {
         background-color: #565853 !important;
         border-bottom: 1px solid #393a37;
     }
-</style>
+.checkSimAll{
+  padding-top: 30px;
+  background-color: #fff;
+}
+.event-detail {
+  width: 20%;
+  height: 35px;
+}
+.event-detail-buttom {
+  font-size: 18px;
+}
+.event-detail-buttom:hover {
+  cursor: pointer;
+}
+</style>>
