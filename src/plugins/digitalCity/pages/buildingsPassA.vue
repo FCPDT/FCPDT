@@ -54,6 +54,7 @@ const snowShowBase = ref(false);//雪灾场景  -->
 		</template> -->
 	</pagesShow>
   <div class="bottomLight">
+<<<<<<< HEAD
     <div class="bottomLightTipF">
         <div class="bottomLightTipFCenter">
           <el-icon :class="CircleCheckFilledxuanz" :style="{
@@ -88,7 +89,32 @@ const snowShowBase = ref(false);//雪灾场景  -->
       </div>
     </div>
   
+=======
+  <div class="bottomLightTipF">
+    <div class="bottomLightTipFCenter">
+      <el-icon :class="CircleCheckFilledxuanz" class="circle-icon" :style="{ color: CircleCheckFilledc }"><Loading /></el-icon>
+    </div>
+>>>>>>> f8679ec7c7c91c526b4529bf11386fde6a6955d4
   </div>
+  <div class="bottomLightTipF">
+    <div class="bottomLightTipFCenter">
+      <el-icon class="circle-icon" :style="{ color: CircleCheckFilledc }"><CircleCheckFilled /></el-icon>
+    </div>
+    <button @click="handleExceedChange" class="circle-button">sss</button>
+  </div>
+  <div class="bottomLightTipF">
+    <div class="bottomLightTipFCenter">
+      <el-icon class="circle-icon" :style="{ color: CircleCheckFilledw }"><WarningFilled /></el-icon>
+    </div>
+  </div>
+  <div class="bottomLightTipF">
+    <div class="bottomLightTipFCenter">
+      <el-icon class="circle-icon" :style="{ color: CircleCheckFilledi }"><InfoFilled /></el-icon>
+    </div>
+  </div>
+</div>
+  
+  
 
 <div class="bs-sysMsg">
         <span style="font-weight: bold;line-height:50px;font-size:23px"
@@ -124,7 +150,7 @@ const snowShowBase = ref(false);//雪灾场景  -->
                 <!-- <el-icon :size="18" class="iconfont">
                     <Edit />
                   </el-icon> -->
-                <div class="event-detail" @click="showNodeDetial(item)">
+                  <div class="event-detail" @click="showNodeDetial(item)">
                   <el-icon class="event-detail-buttom"><MoreFilled /></el-icon>
                 </div>
               </div>
@@ -372,6 +398,35 @@ const snowShowBase = ref(false);//雪灾场景  -->
             </span>
           </template>
     </el-dialog>
+
+    <div>
+    <button @click="showGlobalInfo">显示全局信息</button>
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <span class="close" @click="closeModal">&times;</span>
+        <!-- 在这里动态显示全局信息 -->
+        <h2>全局信息</h2>
+        <div v-if="globalData">
+          <h3>用户信息</h3>
+          <p>用户数量: {{ globalData.userNumber }}</p>
+          <p>用户设备:</p>
+          <ul>
+            <li v-for="user in globalData.usermodel" :key="user.userEquipment">
+              {{ user.userEquipment }}: {{ user.userNum }}
+            </li>
+          </ul>
+          <h3>大区信息</h3>
+          <div v-for="region in globalData.listOfRegions" :key="region.regionsName">
+            <h4>大区{{ region.regionsName }}</h4>
+            <!-- 这里动态显示大区信息 -->
+            <!-- 以及相关配置等 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 </template>
 
 <script setup lang="ts">
@@ -563,6 +618,7 @@ const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
 
 //完成操作
 const handleEndFile = () => {
+<<<<<<< HEAD
   let reader = new FileReader(); //新建一个FileReader
   reader.readAsText(fileList[0].raw, "UTF-8"); //读取文件
   reader.onload = (evt) => {
@@ -766,6 +822,47 @@ const startFixController = () => {
   },2000)
 }
 
+=======
+  const file = fileList[0]; // 获取文件列表中的第一个文件对象
+  const reader = new FileReader(); // 新建一个FileReader
+  if (file instanceof Blob) { // 确保文件对象是 Blob 类型
+    reader.readAsText(file); // 读取文件
+    reader.onload = (evt) => {
+      // 读取文件完毕执行此函数
+      try {
+        const locakDataJson = JSON.parse(evt.target.result as string);
+        dataJson = locakDataJson;
+        console.log(locakDataJson);
+        dialogWholeLatencyVisible.value = false;
+        const loading = ElLoading.service({
+          lock: true,
+          text: '加载中......',
+          background: 'rgba(0, 0, 0, 0.7)',
+        })
+        setTimeout(() => {
+          loading.close();
+          // startDigController();
+        }, 3000)
+        // dataJson 就是读取的文件内容
+      } catch (error) {
+        ElMessageBox.alert('解析JSON时出错(JSON文件格式错误)：' + error, 'Title', {
+          // if you want to disable its autofocus
+          // autofocus: false,
+          confirmButtonText: 'OK',
+        })
+        // 在这里处理错误
+      }
+    };
+  } else {
+    // 处理文件类型不正确的情况
+    console.error('文件类型错误');
+  }
+}
+
+
+
+
+>>>>>>> f8679ec7c7c91c526b4529bf11386fde6a6955d4
 const open = () => {
   ElMessageBox.alert('This is a message', 'Title', {
     // if you want to disable its autofocus
@@ -883,8 +980,121 @@ paneControl.addBinding(passState, 'uPosition', {
 // }
 
 
+<<<<<<< HEAD
+=======
+//各类场景添加
+const fireShowBase = ref(false);//火灾场景 
 
-</script>
+
+const noguzhang1ShowBase = ref(true);//大区一正常场景 
+const guzhang1ShowBase = ref(true);//大区一故障场景 
+const noGuzhangShowBase = ref(true);//大区二非故障场景 
+
+const snowShowBase = ref(false);//雪灾场景 
+
+
+const handleFireStart = () => {
+  fireShowBase.value = true;
+}
+const handleFireEnd = () => {
+  fireShowBase.value =false;
+}
+
+const handle1guzhangShowBaseEnd = () => {
+  guzhang1ShowBase.value = false;
+}
+const handle1guzhangShowBaseStart = () => {
+  guzhang1ShowBase.value = true;
+}
+
+const handlenoguzhangShowBaseEnd = () => {
+  noguzhang1ShowBase.value = false;
+}
+const handlenoguzhangShowBaseStart = () => {
+  noguzhang1ShowBase.value = true;
+}
+const handleNoGuStart = () => {
+  noGuzhangShowBase.value   = true;
+}
+const handleNoGuEnd = () => {
+  noGuzhangShowBase.value = false;
+}
+
+const handleSnowStart = () => {
+  snowShowBase.value = true;
+}
+const handleSnowEnd = () => {
+  snowShowBase.value  = false;
+}
+
+//550行startDigController（）函数
+const startDigController = () => {
+  // 环境参数配置
+  const environmentConfig = () => {
+    // 在这里进行环境参数配置
+    console.log('环境参数配置...');
+  };
+
+  // 初始化用户入网大区一流程
+  const initializeUserNetwork = () => {
+    // 在这里进行初始化用户入网大区一流程
+    console.log('初始化用户入网大区一流程...');
+  };
+
+
+  // 故障流程
+  const faultProcess = () => {
+    // 判断是否发生故障
+    const isFault = true; // 根据实际情况进行判断
+
+    if (isFault) {
+      // 雪灾和火灾图像要求同时出现
+      snowShowBase.value = true;
+      fireShowBase.value = true;
+      // 地图中显示智能设备故障
+      noguzhang1ShowBase.value = false;
+      // 第二个灯灭
+      CircleCheckFilledc.value = "black";
+      // 第三个灯亮起
+      CircleCheckFilledw.value = "red";
+      console.log('故障流程...');
+
+      // 故障流程结束后开始向大区二请求
+      // 第三个图标灭
+      CircleCheckFilledw.value = "black";
+      // 第四个亮起
+      CircleCheckFilledi.value = "red";
+      console.log('向大区二请求...');
+    }
+  };
+
+  // 开始执行流程
+  environmentConfig(); // 环境参数配置
+  initializeUserNetwork(); // 初始化用户入网大区一流程
+  faultProcess(); // 故障流程
+
+  // 界面开始后左下角第一个图标要求亮起并旋转
+  CircleCheckFilledxuanz.value = "red";
+  // 事件列表中基本消息出现内容，即环境参数配置内容消息
+  dialogWholeLatencyVisible.value = true;
+  dialogWholeLatencyContent.value = "环境参数配置内容消息";
+  console.log('环境参数配置...');
+};
+
+const handleClickButton = () => {
+  // 调用 handleEndFile 函数处理导入的 JSON 文件
+  handleEndFile();
+>>>>>>> f8679ec7c7c91c526b4529bf11386fde6a6955d4
+
+  // 在处理完全局信息数据后，根据需要显示全局信息
+  // 例如，显示全局信息的对话框或者其他组件
+  // 这里假设你使用了 Element Plus 的 ElMessageBox 来显示对话框
+  ElMessageBox.alert('显示全局信息', '全局信息', {
+    confirmButtonText: 'OK',
+  });
+}
+
+</script>  
 
 <style>
 .el-row {
@@ -902,38 +1112,87 @@ paneControl.addBinding(passState, 'uPosition', {
   border-radius: 4px;
   min-height: 36px;
 }
-.buttonSize{
-	width: 250px;
-	height: 50px;
-	font-size: 22px;
-	margin-top: 90px;
-}
-.bottomLight{
-  position: absolute;
-  width: 100%;
-  height: 100px;
-  bottom: 10px;
+.circle-icon {
+  font-size: 50px; /* 调整图标大小 */
+  width: 80px; /* 设置图标容器宽度 */
+  height: 80px; /* 设置图标容器高度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* 使图标容器成为圆形 */
 }
 
-.bottomLightTipF{
+.bottomLightTipF {
   float: left;
-  width: 24%;
+  width: 25%; /* 平均分配四个图标 */
   height: 100px;
   opacity: 0.8;
-  display: flex; 
+  display: flex;
   justify-content: center;
-  
-  font-size: 40px;
 }
+<<<<<<< HEAD
 .bottomLightTipFCenter{
   display: flex; 
   width: 60px;
   height: 60px;
   border-radius:50%;
+=======
+
+.bottomLightTipFCenter {
+  display: flex;
+  width: 100%; /* 图标容器占父容器的百分比 */
+  height: 100%;
+  border-radius: 50%;
+>>>>>>> f8679ec7c7c91c526b4529bf11386fde6a6955d4
   justify-content: center;
   background-color: aliceblue;
   align-items: center;
 }
+
+.circle-button {
+  width: 80%; /* 使按钮占满图标容器 */
+  height: 80%;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.bottomLight {
+  position: absolute;
+  width: 80%;
+  height: 100px;
+  bottom: 10px;
+}
+.bottomLightTipF .bottomLightTipFCenter {
+  width: 70px; /* 图标容器大小 */
+  height: 70px;
+  border-radius: 50%; /* 使内部容器成为圆形 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white; /* 将背景颜色改为透明 */
+}
+
+.bottomLightTipF .bottomLightTipFCenter .bottomLight {
+  width: 100%; /* 将外部容器宽度设置为100% */
+  height: 100%; /* 将外部容器高度设置为100% */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: transparent; /* 外部容器背景透明 */
+}
+.bottomLightTipF .circle-button {
+  width: 50px; /* 按钮容器大小 */
+  height: 50px;
+  border-radius: 50%; /* 使按钮容器成为圆形 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc; /* 设置按钮的背景颜色 */
+}
+
 .bs-sysMsg {
   color: #ffffff;
   margin-top: 4%;
@@ -978,6 +1237,10 @@ paneControl.addBinding(passState, 'uPosition', {
 .event-detail-buttom:hover {
   cursor: pointer;
 }
+
+
+
+
 
 el-collapse {
       background-color: #565853 !important;
